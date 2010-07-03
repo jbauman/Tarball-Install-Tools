@@ -1,4 +1,12 @@
+Tarball Install Tools
+
 These perl scripts are tools for installing files from a tarball on *NIX
 based systems. The idea is to have a single, self-installing executable
 that can be passed to multiple hosts which will extract the necessary
 files and customize them for the specific host system.
+
+This can be of particular use when you're installing software on
+multiple *NIX hosts, and the installer for that software is lengthy,
+tedious, and/or requires manual customization. In these cases, doing the
+installation once, then making a tarball of the finished installation
+can be a great time saver.

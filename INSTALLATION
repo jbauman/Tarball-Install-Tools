@@ -81,6 +81,11 @@ where you need to substitute the name of your tar file for
 <your_tar_ball>.tar.gz.  You can now distribute the file to your other
 systems, execute it, and your customized software will be installed.
 
+Note that once the install script has been created, editing it will 
+cause the tarball portion of the file to become corrupted so that it 
+will not be possible to extract it. So make all your changes before 
+assembling the installation script.
+
 I hope you find this useful. If you do, or if you have any criticisms, 
 comments or suggested improvements, please drop me a note at 
 jbauman at yahoo dot com with "tarball install tools" as the subject. 
