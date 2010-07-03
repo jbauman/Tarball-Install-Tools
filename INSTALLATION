@@ -1,0 +1,88 @@
+Tarball Install Tools
+
+The software provided consists of
+
+head.pl					-- script to customize with your code 
+Make_changes.pm		-- perl module enabling regex based changes to 
+								files of your choice 
+install.pl				-- example finished install script (which 
+								installs the above files)
+
+The first task is to create a tarball of the software or files you 
+wish to distribute to other hosts and customize, typically 
+
+tar -czvf <name of your file>.tar <file or directories to include>
+
+There are two possible things you will need to change in head.pl after
+creating your tarball: 1) the location of the perl on your systems. Make
+sure the shebang line is correct:
+
+#!/usr/bin/perl
+
+should be changed to reflect the location of the perl executable on your
+system. You can determine this by executing
+
+which perl
+
+at the shell prompt.
+
+2) insert any customization script after the
+
+# your script goes here
+
+line and before the __DATA__ line. You have the full power of perl at your
+command. What's that you say? Writing all that custom script is more
+than you want to take on? Say no more, the solution is at hand. This is
+what the Make_changes.pm module is all about. It allows you to simply
+supply the names of the files you want to modify with one or more perl
+regular expressions you wish to apply to them. You can also automatically
+make backups of the original files prior to applying those changes. In
+addition, you can have the program prompt for your approval prior to
+making each change with a diff of the proposed change to be made.
+
+If you don't wish to use Make_changes.pm, skip down to the section,
+
+If you don't wish to use Make_changes.pm, skip down to the section,
+"Assembling the Installation Script."
+
+This module does have a couple prerequisites. These will need to be
+installed on your systems before you can use Make_changes.pm:
+
+Config::Std Text::Diff
+
+which can be downloaded and installed from http://www.cpan.org.
+
+You will also need to put Make_changes.pm on each system you wish to use
+it on.  You can either put it in a directory already in your perl @INC,
+which you can see with the following command:
+
+perl -e 'for (@INC) {print "$_\n"}'
+
+or you can install it in any place of your choosing, and then include
+a line in head.pl to tell it where to find it:
+
+use lib '/path/to/your/Make_changes.pm';
+
+In either case, you'll need to include the line
+
+use Make_changes;
+
+in head.pl.
+
+
+Assembling the Installation Script
+
+Once you have your tarball created and your head.pl scripting done, you
+can assemble them into a single executable with the following commands:
+
+cat head.pl <your_tar_ball>.tar.gz > install.pl chmod 744 install.pl
+
+where you need to substitute the name of your tar file for
+<your_tar_ball>.tar.gz.  You can now distribute the file to your other
+systems, execute it, and your customized software will be installed.
+
+I hope you find this useful. If you do, or if you have any criticisms, 
+comments or suggested improvements, please drop me a note at 
+jbauman at yahoo dot com with "tarball install tools" as the subject. 
+
+Jeff Bauman
