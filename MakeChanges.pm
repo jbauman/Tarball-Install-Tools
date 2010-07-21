@@ -18,8 +18,6 @@ sub make_changes {
 	my $prompt = shift;	# scalar (boolean)
 	my $backup = shift;	# scalar (boolean)
 
-	print "we're in the $vars->{env} environment\n\n";
-
 	foreach my $change (@$changes) {	# grab a hash reference
 		$write_change = '';
 
@@ -32,7 +30,6 @@ sub make_changes {
 		$modified = $contents;
 		foreach my $ch_expr (@{ $change->{CHANGES} }) {
 			$code = '$modified =~ ' . $ch_expr . ';';
-			#print $code . "\n";
 			$retval = eval $code;
 			die "Error in regular expression: $@\nCode: $code\n" if($@);
 			print "WARNING: regex $ch_expr\ndid not match anything in $change->{FILE}.\n" if ( ! $retval );
@@ -45,13 +42,12 @@ sub make_changes {
 			print $diff;
 
 			#prompt for changes to be written, if desired
-			#if ( $prompt ) {
 			if ( ! defined @$prompt || ( @$prompt[0] ne "noprompt" && @$prompt[0] ne "np" )) {
 				while ( $write_change eq '' ) {
 					print "Do you want to make these changes (y/n)? ";
 					$_ = <STDIN>;
-					 $write_change = 1 if /[Yy]/;
-					 $write_change = 0 if /[Nn]/;
+					$write_change = 1 if /[Yy]/;
+					$write_change = 0 if /[Nn]/;
 				}
 			} else {
 				$write_change = 1;
@@ -77,7 +73,7 @@ sub make_changes {
 				close $fh;
 			}
 		} else {
-			print "No changes -- $change->{FILE} is already set up for the $vars->{env} environment.\n";
+			print "No changes -- $change->{FILE} is already set up with the expected changes.\n";
 		}
 	}
 }
