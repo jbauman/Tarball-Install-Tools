@@ -2,16 +2,21 @@ Tarball Install Tools
 
 The software provided consists of
 
-head.pl					-- script to customize with your code 
-Make_changes.pm		-- perl module enabling regex based changes to 
-								files of your choice 
-install.pl				-- example finished install script (which 
-								installs the above files)
+head.pl           -- script to customize with your code 
+MakeChanges.pm    -- perl module enabling regex based changes to 
+                        files of your choice 
+install.pl        -- example finished install script (which 
+                        installs the above files)
 
 The first task is to create a tarball of the software or files you 
 wish to distribute to other hosts and customize, typically 
 
 tar -czvf <name of your file>.tar <file or directories to include>
+
+or, if you don't have gnu tar:
+
+tar -cvf <name of your file>.tar <file or directories to include>
+gzip <name of your file>.tar
 
 There are two possible things you will need to change in head.pl after
 creating your tarball: 1) the location of the perl on your systems. Make
@@ -33,26 +38,26 @@ at the shell prompt.
 line and before the __DATA__ line. You have the full power of perl at your
 command. What's that you say? Writing all that custom script is more
 than you want to take on? Say no more, the solution is at hand. This is
-what the Make_changes.pm module is all about. It allows you to simply
+what the MakeChanges.pm module is all about. It allows you to simply
 supply the names of the files you want to modify with one or more perl
 regular expressions you wish to apply to them. You can also automatically
 make backups of the original files prior to applying those changes. In
 addition, you can have the program prompt for your approval prior to
 making each change with a diff of the proposed change to be made.
 
-If you don't wish to use Make_changes.pm, skip down to the section,
+If you don't wish to use MakeChanges.pm, skip down to the section,
 
-If you don't wish to use Make_changes.pm, skip down to the section,
+If you don't wish to use MakeChanges.pm, skip down to the section,
 "Assembling the Installation Script."
 
 This module does have a couple prerequisites. These will need to be
-installed on your systems before you can use Make_changes.pm:
+installed on your systems before you can use MakeChanges.pm:
 
 Config::Std Text::Diff
 
 which can be downloaded and installed from http://www.cpan.org.
 
-You will also need to put Make_changes.pm on each system you wish to use
+You will also need to put MakeChanges.pm on each system you wish to use
 it on.  You can either put it in a directory already in your perl @INC,
 which you can see with the following command:
 
@@ -61,11 +66,11 @@ perl -e 'for (@INC) {print "$_\n"}'
 or you can install it in any place of your choosing, and then include
 a line in head.pl to tell it where to find it:
 
-use lib '/path/to/your/Make_changes.pm';
+use lib '/path/to/your/MakeChanges.pm';
 
 In either case, you'll need to include the line
 
-use Make_changes;
+use MakeChanges;
 
 in head.pl.
 
